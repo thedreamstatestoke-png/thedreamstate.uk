@@ -1,0 +1,116 @@
+/* ============================================================
+   THE DREAM STATE — Journal (blog) page
+   Magazine layout · scroll-reactive background · iframe reader
+   ============================================================ */
+
+/* ---------- Scroll-reactive background scene ---------- */
+.blog-scene{ position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+.blog-scene .b-orb{ position:absolute; border-radius:50%; filter:blur(8px); opacity:.5;
+  will-change:transform; }
+.b-orb.o1{ width:46vw; height:46vw; left:-12vw; top:-8vw;
+  background:radial-gradient(circle at 40% 40%, rgba(87,21,110,.6), transparent 65%); }
+.b-orb.o2{ width:38vw; height:38vw; right:-10vw; top:18vh;
+  background:radial-gradient(circle at 50% 50%, rgba(122,30,156,.42), transparent 65%); }
+.b-orb.o3{ width:42vw; height:42vw; left:8vw; bottom:-14vw;
+  background:radial-gradient(circle at 50% 50%, rgba(39,0,48,.85), transparent 60%); }
+.b-orb.o4{ width:26vw; height:26vw; right:14vw; bottom:6vh;
+  background:radial-gradient(circle at 50% 50%, rgba(212,175,55,.12), transparent 60%); }
+.blog-scene .b-ring{ position:absolute; border:1px solid rgba(212,175,55,.18); border-radius:50%;
+  will-change:transform; }
+.b-ring.r1{ width:60vw; height:60vw; right:-22vw; top:-12vw; }
+.b-ring.r2{ width:34vw; height:34vw; left:-12vw; bottom:8vh; border-color:rgba(212,175,55,.10); }
+.blog-scene .b-streak{ position:absolute; width:140%; height:1px; left:-20%;
+  background:linear-gradient(90deg,transparent, rgba(212,175,55,.5), transparent); will-change:transform; }
+.b-streak.s1{ top:30vh; } .b-streak.s2{ top:62vh; opacity:.6; } .b-streak.s3{ top:86vh; opacity:.4; }
+.blog-scene .b-word{ position:absolute; font-family:var(--display); font-style:italic;
+  color:rgba(247,242,233,.035); font-size:18vw; line-height:.8; white-space:nowrap; will-change:transform;
+  font-weight:300; }
+.b-word.w1{ top:24vh; left:2vw; } .b-word.w2{ top:120vh; right:2vw; }
+
+/* ---------- Journal hero ---------- */
+.journal-hero{ position:relative; padding:clamp(8rem,15vh,11rem) 0 var(--s-4); }
+.journal-hero .kx{ display:flex; flex-wrap:wrap; gap:18px 40px; align-items:flex-end; justify-content:space-between; }
+.journal-hero h1{ font-size:clamp(3rem,8vw,6.4rem); line-height:.92; }
+.journal-hero .blurb{ max-width:42ch; color:var(--mist); }
+.journal-stats{ display:flex; gap:28px; flex-wrap:wrap; margin-top:var(--s-4); }
+.journal-stats .js{ }
+.journal-stats .js b{ font-family:var(--display); font-size:1.8rem; color:var(--gold-2); display:block; line-height:1; }
+.journal-stats .js span{ font-family:var(--mono); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--mist-2); }
+
+/* ---------- Filter chips ---------- */
+.filter-row{ display:flex; gap:10px; flex-wrap:wrap; margin:var(--s-5) 0 var(--s-5); }
+.fchip{ font-family:var(--mono); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--mist); background:rgba(255,255,255,.03); border:1px solid var(--line-2);
+  padding:.6em 1.1em; border-radius:100px; cursor:pointer; transition:.25s; white-space:nowrap; }
+.fchip:hover{ color:var(--white); border-color:var(--line); }
+.fchip.active{ background:linear-gradient(105deg,var(--gold),var(--gold-2)); color:#1c0024; border-color:transparent; font-weight:700; }
+
+/* ---------- Card grid: 2 mobile · 4 desktop ---------- */
+.blog-grid{ display:grid; gap:20px; grid-template-columns:repeat(2,1fr); }
+@media(min-width:720px){ .blog-grid{ grid-template-columns:repeat(3,1fr); gap:22px; } }
+@media(min-width:1080px){ .blog-grid{ grid-template-columns:repeat(4,1fr); gap:24px; } }
+
+.bcard{ position:relative; display:flex; flex-direction:column; border-radius:18px; overflow:hidden;
+  background:linear-gradient(170deg,var(--card),var(--ink-2)); border:1px solid var(--line-2);
+  cursor:pointer; transition:transform .45s var(--ease), border-color .45s, box-shadow .45s; opacity:0;
+  transform:translateY(28px); }
+.bcard.in{ opacity:1; transform:none; }
+.bcard:hover{ transform:translateY(-8px); border-color:var(--line); box-shadow:0 34px 64px -34px rgba(87,21,110,.9); }
+.bcard-art{ position:relative; aspect-ratio:16/11; overflow:hidden; }
+.bcard-art svg{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+.bcard-art .num{ position:absolute; top:12px; left:14px; font-family:var(--mono); font-size:.7rem;
+  letter-spacing:.1em; color:rgba(247,242,233,.6); z-index:2; }
+.bcard-art .rd{ position:absolute; bottom:12px; right:14px; font-family:var(--mono); font-size:.64rem;
+  letter-spacing:.08em; color:var(--cream); background:rgba(8,6,12,.5); backdrop-filter:blur(6px);
+  padding:.35em .7em; border-radius:100px; border:1px solid var(--line); z-index:2; }
+.bcard-art::after{ content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg,transparent 40%, rgba(8,6,12,.55)); }
+.bcard:hover .bcard-art svg{ transform:scale(1.06); transition:transform .9s var(--ease); }
+.bcard-body{ padding:18px 18px 20px; display:flex; flex-direction:column; flex:1; }
+.bcard .cat{ font-family:var(--mono); font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); }
+.bcard h3{ font-size:1.16rem; line-height:1.18; margin:.55rem 0 .5rem; color:var(--white); }
+.bcard p{ font-size:.88rem; color:var(--mist); line-height:1.55; flex:1; }
+.bcard .read-link{ margin-top:1rem; font-family:var(--mono); font-size:.7rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--gold-2); display:flex; align-items:center; gap:.5em; }
+.bcard .read-link .arw{ transition:transform .3s var(--ease); }
+.bcard:hover .read-link .arw{ transform:translateX(5px); }
+
+/* featured first card spans wider on desktop */
+@media(min-width:1080px){
+  .bcard.feat{ grid-column:span 2; grid-row:span 1; flex-direction:row; aspect-ratio:auto; }
+  .bcard.feat .bcard-art{ aspect-ratio:auto; width:52%; }
+  .bcard.feat .bcard-body{ width:48%; justify-content:center; padding:30px; }
+  .bcard.feat h3{ font-size:1.7rem; }
+  .bcard.feat p{ font-size:.96rem; }
+}
+
+/* ---------- empty filter state ---------- */
+.blog-empty{ text-align:center; color:var(--mist-2); font-family:var(--mono); font-size:.85rem;
+  padding:var(--s-6) 0; display:none; }
+
+/* ---------- Reader overlay (iframe) ---------- */
+.reader{ position:fixed; inset:0; z-index:200; display:none; }
+.reader.open{ display:block; }
+.reader-backdrop{ position:absolute; inset:0; background:rgba(5,3,9,.72); backdrop-filter:blur(8px);
+  opacity:0; transition:opacity .4s; }
+.reader.open .reader-backdrop{ opacity:1; }
+.reader-shell{ position:absolute; inset:0; display:flex; align-items:stretch; justify-content:center;
+  padding:clamp(0px,3vh,40px) clamp(0px,3vw,40px); }
+.reader-panel{ position:relative; width:min(880px,100%); height:100%; background:#0c0810;
+  border:1px solid var(--line); border-radius:clamp(0px,2vw,22px); overflow:hidden;
+  box-shadow:0 50px 120px -30px rgba(0,0,0,.8); transform:translateY(26px) scale(.985);
+  opacity:0; transition:transform .5s var(--ease), opacity .5s; }
+.reader.open .reader-panel{ transform:none; opacity:1; }
+.reader-panel iframe{ width:100%; height:100%; border:0; display:block; background:#0c0810; }
+.reader-close{ position:absolute; top:14px; right:16px; z-index:5; width:42px; height:42px; border-radius:50%;
+  background:rgba(12,8,16,.7); backdrop-filter:blur(8px); border:1px solid var(--line); color:var(--gold-2);
+  font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:.25s; }
+.reader-close:hover{ background:var(--gold); color:#1c0024; border-color:var(--gold); transform:rotate(90deg); }
+.reader-nav{ position:absolute; bottom:16px; left:50%; transform:translateX(-50%); z-index:5; display:flex;
+  gap:10px; background:rgba(12,8,16,.7); backdrop-filter:blur(10px); border:1px solid var(--line);
+  border-radius:100px; padding:7px 8px; }
+.reader-nav button{ background:none; border:0; color:var(--mist); font-family:var(--mono); font-size:.7rem;
+  letter-spacing:.08em; text-transform:uppercase; cursor:pointer; padding:.5em 1em; border-radius:100px; transition:.2s; }
+.reader-nav button:hover{ color:var(--white); }
+.reader-nav .rn-go{ background:linear-gradient(105deg,var(--gold),var(--gold-2)); color:#1c0024; font-weight:700; }
+body.reader-lock{ overflow:hidden; }
