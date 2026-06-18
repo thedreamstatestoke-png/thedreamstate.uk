@@ -483,3 +483,58 @@ p.wide{ max-width:none; }
 .faq2-a{ max-height:0; overflow:hidden; transition:max-height .5s var(--ease); }
 .faq2-a-inner{ padding:0 1.4rem 1.4rem; color:var(--mist); max-width:70ch; line-height:1.7; }
 .faq2-item.open .faq2-a{ max-height:640px; }
+
+/* ============================================================
+   MOBILE POLISH — centered header, stylish menu, 1-up cards, safe gutters
+   ============================================================ */
+@media(max-width:1159px){
+  /* centered logo, name underneath, burger on the right */
+  .nav-inner{ position:relative; justify-content:center; padding:12px 18px; }
+  .brand{ flex-direction:column; gap:5px; text-align:center; }
+  .brand .bwords{ align-items:center; line-height:1; }
+  .brand .bwords span{ display:none; }            /* hide tagline on mobile */
+  .brand .bwords b{ font-size:1rem; letter-spacing:.03em; }
+  .brand-mark{ height:40px; }
+  .nav-cta{ position:absolute; right:14px; top:50%; transform:translateY(-50%); gap:0; }
+  .nav-cta .btn-gold{ display:none; }             /* keep the header to logo + menu */
+  .burger{ padding:8px; }
+}
+
+/* stylish staggered mobile menu */
+.mobile-menu{ transition:transform .55s cubic-bezier(.22,.61,.36,1); }
+.mobile-menu a, .mobile-menu .btn{ opacity:0; transform:translateY(16px);
+  transition:opacity .5s var(--ease), transform .55s var(--ease); }
+.mobile-menu.open a, .mobile-menu.open .btn, .nav.open + .mobile-menu a, .nav.open + .mobile-menu .btn{ opacity:1; transform:none; }
+.mobile-menu.open a:nth-child(1){ transition-delay:.10s } .mobile-menu.open a:nth-child(2){ transition-delay:.16s }
+.mobile-menu.open a:nth-child(3){ transition-delay:.22s } .mobile-menu.open a:nth-child(4){ transition-delay:.28s }
+.mobile-menu.open a:nth-child(5){ transition-delay:.34s } .mobile-menu.open a:nth-child(6){ transition-delay:.40s }
+.mobile-menu.open a:nth-child(7){ transition-delay:.46s } .mobile-menu.open .btn{ transition-delay:.54s }
+.mobile-menu a{ position:relative; }
+.mobile-menu a .mi{ color:var(--gold-2); opacity:.7; }
+
+/* one card per view on mobile so nothing overhangs */
+@media(max-width:600px){
+  .blog-grid, .results-board, .pillars, .heritage, .facts,
+  .g-2, .g-3, .g-4, .footer-grid, .terms, .includes, .home-reviews,
+  .grid.g-2, .grid.g-3, .grid.g-4{ grid-template-columns:1fr !important; }
+  .mosaic{ grid-template-columns:1fr !important; grid-auto-rows:auto !important; }
+  .mosaic .m-wide, .mosaic .m-tall, .mosaic .m-sq{ grid-column:auto !important; grid-row:auto !important; }
+  .proof-stats{ flex-direction:column; gap:1.3rem; }
+  .bcard.feat{ grid-column:auto !important; flex-direction:column !important; }
+  .bcard.feat .bcard-art{ width:auto !important; aspect-ratio:16/11 !important; }
+  .split, .split.rev{ gap:var(--s-5) !important; }
+}
+
+/* safe edge gutters — nothing touches the screen edge */
+@media(max-width:560px){
+  .wrap{ padding-left:16px; padding-right:16px; }
+  .legal-toc, .selector, .filter-row{ padding-left:0; padding-right:0; }
+  h1, .display-xl{ overflow-wrap:break-word; }
+  .ticker-track span{ padding:12px 18px; }
+  .reader-shell{ padding:0 !important; }
+  .reader-panel{ border-radius:0 !important; }
+}
+@media(max-width:380px){
+  .wrap{ padding-left:14px; padding-right:14px; }
+}
+html, body{ overflow-x:hidden; max-width:100%; }
