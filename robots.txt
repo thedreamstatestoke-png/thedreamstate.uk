@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /terms.html
+Disallow: /privacy.html
+Disallow: /refunds.html
+Disallow: /guarantee.html
+
+Sitemap: https://thedreamstate.uk/sitemap.xml
